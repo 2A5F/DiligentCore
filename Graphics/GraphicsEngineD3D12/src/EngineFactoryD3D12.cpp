@@ -459,7 +459,7 @@ void EngineFactoryD3D12Impl::CreateDeviceAndContextsD3D12(const EngineD3D12Creat
     catch (const std::runtime_error&)
     {
         LOG_ERROR("Failed to initialize D3D12 resources");
-        return;
+        throw;
     }
 
     AttachToD3D12Device(d3d12Device, static_cast<Uint32>(CmdQueues.size()), CmdQueues.data(), EngineCI, ppDevice, ppContexts);
