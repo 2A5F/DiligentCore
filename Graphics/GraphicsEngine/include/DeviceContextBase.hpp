@@ -1569,10 +1569,10 @@ inline void DeviceContextBase<ImplementationTraits>::ClearDepthStencil(ITextureV
             }
             else
             {
-                LOG_WARNING_MESSAGE("Depth-stencil view '", ViewDesc.Name,
-                                    "' is not bound to the device context. "
-                                    "ClearDepthStencil command is more efficient when depth-stencil "
-                                    "view is bound to the context. In OpenGL backend this is a requirement.");
+                // LOG_WARNING_MESSAGE("Depth-stencil view '", ViewDesc.Name,
+                //                     "' is not bound to the device context. "
+                //                     "ClearDepthStencil command is more efficient when depth-stencil "
+                //                     "view is bound to the context. In OpenGL backend this is a requirement.");
             }
         }
     }
@@ -1615,9 +1615,9 @@ inline void DeviceContextBase<ImplementationTraits>::ClearRenderTarget(ITextureV
             }
             else
             {
-                LOG_WARNING_MESSAGE("Render target view '", ViewDesc.Name,
-                                    "' is not bound to the device context. ClearRenderTarget command is more efficient "
-                                    "if render target view is bound to the device context. In OpenGL backend this is a requirement.");
+                // LOG_WARNING_MESSAGE("Render target view '", ViewDesc.Name,
+                //                     "' is not bound to the device context. ClearRenderTarget command is more efficient "
+                //                     "if render target view is bound to the device context. In OpenGL backend this is a requirement.");
             }
         }
     }
