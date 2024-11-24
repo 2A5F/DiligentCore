@@ -34,12 +34,14 @@
 #ifdef DILIGENT_DEBUG
 
 #    include <typeinfo>
+#    include <exception>
 
 #    define ASSERTION_FAILED(Message, ...)                                                 \
         do                                                                                 \
         {                                                                                  \
             auto msg = Diligent::FormatString(Message, ##__VA_ARGS__);                     \
-            Diligent::DebugAssertionFailed(msg.c_str(), __FUNCTION__, __FILE__, __LINE__); \
+            /*Diligent::DebugAssertionFailed(msg.c_str(), __FUNCTION__, __FILE__, __LINE__);*/ \
+            throw std::runtime_error(msg);                                                 \
         } while (false)
 
 #    define VERIFY(Expr, Message, ...)                    \
