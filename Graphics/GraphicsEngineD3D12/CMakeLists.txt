@@ -250,11 +250,13 @@ if(${DILIGENT_LOAD_PIX_EVENT_RUNTIME})
         SOURCE_DIR			${DILIGENT_PIX_EVENT_RUNTIME_PATH}
         CONFIGURE_COMMAND	${CMAKE_COMMAND} -E tar -xf "${CMAKE_BINARY_DIR}/WinPixEventRuntime/winpixeventruntime.*.nupkg"
         LOG_CONFIGURE 		1
+        DOWNLOAD_EXTRACT_TIMESTAMP 1
     )
     FetchContent_GetProperties(WinPixEventRuntime)
-    if(NOT WinPixEventRuntime_POPULATED)
-        FetchContent_Populate(WinPixEventRuntime)
-    endif()
+    FetchContent_MakeAvailable(WinPixEventRuntime)
+#    if(NOT WinPixEventRuntime_POPULATED)
+#        FetchContent_Populate(WinPixEventRuntime)
+#    endif()
     if(EXISTS "${DILIGENT_PIX_EVENT_RUNTIME_PATH}/include/WinPixEventRuntime/pix3.h")
         if(PLATFORM_WIN32 AND ${CMAKE_SIZEOF_VOID_P} EQUAL 8)
             set(DILIGENT_PIX_EVENT_RUNTIME_DLL_PATH ${DILIGENT_PIX_EVENT_RUNTIME_PATH}/bin/x64/WinPixEventRuntime.dll)
