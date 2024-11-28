@@ -176,7 +176,11 @@ RenderDeviceD3D12Impl::RenderDeviceD3D12Impl(IReferenceCounters*          pRefCo
         m_DeviceInfo.Features = EnableDeviceFeatures(m_AdapterInfo.Features, EngineCI.Features);
 
         auto FeatureLevel = GetD3DFeatureLevelFromDevice(m_pd3d12Device);
-        switch (static_cast<Uint32>(FeatureLevel))
+#if defined(_MSC_VER) && !defined(NTDDI_WIN10_FE)
+#    pragma warning(push)
+#    pragma warning(disable : 4063)
+#endif
+        switch (FeatureLevel)
         {
             case D3D_FEATURE_LEVEL_12_2: m_DeviceInfo.APIVersion = {12, 2}; break;
             case D3D_FEATURE_LEVEL_12_1: m_DeviceInfo.APIVersion = {12, 1}; break;
@@ -187,6 +191,9 @@ RenderDeviceD3D12Impl::RenderDeviceD3D12Impl(IReferenceCounters*          pRefCo
             case D3D_FEATURE_LEVEL_10_0: m_DeviceInfo.APIVersion = {10, 0}; break;
             default: UNEXPECTED("Unexpected D3D feature level");
         }
+#if defined(_MSC_VER) && !defined(NTDDI_WIN10_FE)
+#    pragma warning(pop)
+#endif
 
         // Detect maximum  shader model.
         {

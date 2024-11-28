@@ -54,7 +54,11 @@ static const ShaderVersion HLSLValidateShaderVersion(const ShaderVersion& Versio
 
 static const ShaderVersion GetD3D11ShaderModel(D3D_FEATURE_LEVEL d3dDeviceFeatureLevel, const ShaderVersion& HLSLVersion)
 {
-    switch (static_cast<Uint32>(d3dDeviceFeatureLevel))
+#if defined(_MSC_VER) && !defined(NTDDI_WIN10_FE)
+#    pragma warning(push)
+#    pragma warning(disable : 4063)
+#endif
+    switch (d3dDeviceFeatureLevel)
     {
         // Direct3D11 only supports shader model 5.0 even if the device feature level is
         // above 11.0 (for example, 11.1 or 12.0).
@@ -84,6 +88,9 @@ static const ShaderVersion GetD3D11ShaderModel(D3D_FEATURE_LEVEL d3dDeviceFeatur
             UNEXPECTED("Unexpected D3D feature level ", static_cast<Uint32>(d3dDeviceFeatureLevel));
             return ShaderVersion{4, 0};
     }
+#if defined(_MSC_VER) && !defined(NTDDI_WIN10_FE)
+#    pragma warning(pop)
+#endif
 }
 
 ShaderD3D11Impl::ShaderD3D11Impl(IReferenceCounters*     pRefCounters,
