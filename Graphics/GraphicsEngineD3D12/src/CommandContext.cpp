@@ -480,7 +480,8 @@ void CommandContext::InsertAliasBarrier(D3D12ResourceBase& Before, D3D12Resource
 inline UINT ConvertColor(const float* pColor)
 {
     if (pColor == nullptr)
-        return PIX_COLOR(0, 0, 0);
+        return PIX_COLOR_DEFAULT;
+        // return PIX_COLOR(0, 0, 0);
 
     return PIX_COLOR(static_cast<BYTE>(pColor[0] * 255.f),
                      static_cast<BYTE>(pColor[1] * 255.f),
