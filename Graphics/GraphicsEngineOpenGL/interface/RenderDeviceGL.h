@@ -1,5 +1,5 @@
 /*
- *  Copyright 2019-2023 Diligent Graphics LLC
+ *  Copyright 2019-2024 Diligent Graphics LLC
  *  Copyright 2015-2019 Egor Yusov
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -47,6 +47,38 @@ static DILIGENT_CONSTEXPR INTERFACE_ID IID_RenderDeviceGL =
     IRenderDeviceGLMethods RenderDeviceGL
 
 // clang-format off
+
+#if PLATFORM_WIN32
+/// Win32 native GL context attributes
+struct NativeGLContextAttribsWin32
+{
+    /// Device context handle
+	void* hDC DEFAULT_INITIALIZER(nullptr);
+
+    /// Rendering context handle
+	void* hGLRC DEFAULT_INITIALIZER(nullptr);
+};
+typedef struct NativeGLContextAttribsWin32 NativeGLContextAttribsWin32;
+typedef struct NativeGLContextAttribsWin32 NativeGLContextAttribs;
+#elif PLATFORM_ANDROID
+/// Android native GL context attributes
+struct NativeGLContextAttribsAndroid
+{
+    /// EGL display
+    void* Display DEFAULT_INITIALIZER(nullptr);
+
+    // EGL surface
+    void* Surface DEFAULT_INITIALIZER(nullptr);
+
+    /// EGL context
+    void* Context DEFAULT_INITIALIZER(nullptr);
+
+    /// EGL config
+    void* Config DEFAULT_INITIALIZER(nullptr);
+};
+typedef struct NativeGLContextAttribsAndroid NativeGLContextAttribsAndroid;
+typedef struct NativeGLContextAttribsAndroid NativeGLContextAttribs;
+#endif
 
 /// Exposes OpenGL-specific functionality of a render device.
 DILIGENT_BEGIN_INTERFACE(IRenderDeviceGL, IRenderDevice)
@@ -113,6 +145,11 @@ DILIGENT_BEGIN_INTERFACE(IRenderDeviceGL, IRenderDevice)
                                             const TextureDesc REF TexDesc,
                                             RESOURCE_STATE        InitialState,
                                             ITexture**            ppTexture) PURE;
+
+#if PLATFORM_WIN32 || PLATFORM_ANDROID
+    /// Returns platform-specific GL context attributes
+    VIRTUAL NativeGLContextAttribs METHOD(GetNativeGLContextAttribs)(THIS) CONST PURE;
+#endif
 };
 DILIGENT_END_INTERFACE
 
@@ -125,6 +162,7 @@ DILIGENT_END_INTERFACE
 #    define IRenderDeviceGL_CreateTextureFromGLHandle(This, ...)CALL_IFACE_METHOD(RenderDeviceGL, CreateTextureFromGLHandle, This, __VA_ARGS__)
 #    define IRenderDeviceGL_CreateBufferFromGLHandle(This, ...) CALL_IFACE_METHOD(RenderDeviceGL, CreateBufferFromGLHandle,  This, __VA_ARGS__)
 #    define IRenderDeviceGL_CreateDummyTexture(This, ...)       CALL_IFACE_METHOD(RenderDeviceGL, CreateDummyTexture,        This, __VA_ARGS__)
+#    define IRenderDeviceGL_GetNativeGLContextAttribs(This)     CALL_IFACE_METHOD(RenderDeviceGL, GetNativeGLContextAttribs, This)
 
 // clang-format on
 

@@ -1,3 +1,13 @@
+## Current progress
+
+* Added `OpenXRAttribsSize` member to `APIInfo` struct (API256002)
+* Enabled OpenXR (API256001)
+  * Added `OpenXRAttribs` struct and `pXRAttribs` member to `EngineCreateInfo` struct
+  * Added `NativeGLContextAttribsWin32` and `NativeGLContextAttribsAndroid` structs and
+    `IRenderDeviceGL::GetNativeGLContextAttribs` method
+  * Added OpenXR utility functions (`GetOpenXRGraphicsBinding`, `DestroyOpenXRDebugUtilsMessenger`,
+    `AllocateOpenXRSwapchainImageData`, and `GetOpenXRSwapchainImage`
+
 ## v.2.5.6
 
 * Implemented WebGPU backend

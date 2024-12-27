@@ -1732,4 +1732,24 @@ void RenderDeviceGLImpl::IdleGPU()
     glFinish();
 }
 
+#if PLATFORM_WIN32
+NativeGLContextAttribs RenderDeviceGLImpl::GetNativeGLContextAttribs() const
+{
+    NativeGLContextAttribs Attribs;
+    Attribs.hDC   = m_GLContext.GetWindowHandleToDeviceContext();
+    Attribs.hGLRC = m_GLContext.GetHandle();
+    return Attribs;
+}
+#elif PLATFORM_ANDROID
+NativeGLContextAttribs RenderDeviceGLImpl::GetNativeGLContextAttribs() const
+{
+    NativeGLContextAttribs Attribs;
+    Attribs.Display = m_GLContext.GetDisplay();
+    Attribs.Surface = m_GLContext.GetSurface();
+    Attribs.Context = m_GLContext.GetEGLCtx();
+    Attribs.Config = m_GLContext.GetConfig();
+    return Attribs;
+}
+#endif
+
 } // namespace Diligent

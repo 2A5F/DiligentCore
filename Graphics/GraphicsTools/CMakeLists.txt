@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.6)
+cmake_minimum_required (VERSION 3.10)
 
 project(Diligent-GraphicsTools CXX)
 
@@ -37,11 +37,6 @@ set(SOURCE
     src/DynamicTextureArray.cpp
     src/DynamicTextureAtlas.cpp
     src/GraphicsUtilities.cpp
-    src/GraphicsUtilitiesD3D11.cpp
-    src/GraphicsUtilitiesD3D12.cpp
-    src/GraphicsUtilitiesGL.cpp
-    src/GraphicsUtilitiesVk.cpp
-    src/GraphicsUtilitiesWebGPU.cpp
     src/OffScreenSwapChain.cpp
     src/ScopedQueryHelper.cpp
     src/ScreenCapture.cpp
@@ -75,20 +70,36 @@ else()
     set(RENDER_STATE_CACHE_SUPPORTED FALSE CACHE INTERNAL "Render state cache is not supported")
 endif()
 
+if(DILIGENT_USE_OPENXR)
+    list(APPEND SOURCE src/OpenXRUtilities.cpp)
+    list(APPEND INTERFACE interface/OpenXRUtilities.h)
+endif()
+
 set(DEPENDENCIES)
 
 if(D3D11_SUPPORTED)
-    list(APPEND SOURCE src/TextureUploaderD3D11.cpp)
+    list(APPEND SOURCE src/TextureUploaderD3D11.cpp src/GraphicsUtilitiesD3D11.cpp)
     list(APPEND INTERFACE interface/TextureUploaderD3D11.hpp)
     list(APPEND DEPENDENCIES Diligent-GraphicsEngineD3D11Interface)
+    if(DILIGENT_USE_OPENXR)
+        list(APPEND SOURCE src/OpenXRUtilitiesD3D11.cpp)
+    endif()
 endif()
 
 if(D3D12_SUPPORTED)
     list(APPEND DEPENDENCIES Diligent-GraphicsEngineD3D12Interface)
+    list(APPEND SOURCE src/GraphicsUtilitiesD3D12.cpp)
+    if(DILIGENT_USE_OPENXR)
+        list(APPEND SOURCE src/OpenXRUtilitiesD3D12.cpp)
+    endif()
 endif()
 
 if(VULKAN_SUPPORTED)
-    list(APPEND DEPENDENCIES Diligent-GraphicsEngineVkInterface Vulkan::Headers)
+    list(APPEND SOURCE src/GraphicsUtilitiesVk.cpp)
+    list(APPEND DEPENDENCIES Diligent-GraphicsEngineVk-static Vulkan::Headers)
+    if(DILIGENT_USE_OPENXR)
+        list(APPEND SOURCE src/OpenXRUtilitiesVk.cpp)
+    endif()
 endif()
 
 if(D3D12_SUPPORTED OR VULKAN_SUPPORTED)
@@ -97,15 +108,18 @@ if(D3D12_SUPPORTED OR VULKAN_SUPPORTED)
 endif()
 
 if(GL_SUPPORTED OR GLES_SUPPORTED)
-    list(APPEND SOURCE src/TextureUploaderGL.cpp)
+    list(APPEND SOURCE src/TextureUploaderGL.cpp src/GraphicsUtilitiesGL.cpp)
     list(APPEND INTERFACE interface/TextureUploaderGL.hpp)
-    list(APPEND DEPENDENCIES Diligent-GraphicsEngineOpenGLInterface)
+    list(APPEND DEPENDENCIES Diligent-GraphicsEngineOpenGL-static)
+    if(DILIGENT_USE_OPENXR)
+        list(APPEND SOURCE src/OpenXRUtilitiesGL.cpp)
+    endif()
 endif()
 
 if(WEBGPU_SUPPORTED)
-    list(APPEND SOURCE src/TextureUploaderWebGPU.cpp)
+    list(APPEND SOURCE src/TextureUploaderWebGPU.cpp src/GraphicsUtilitiesWebGPU.cpp)
     list(APPEND INTERFACE interface/TextureUploaderWebGPU.hpp)
-    list(APPEND DEPENDENCIES Diligent-GraphicsEngineWebGPUInterface)
+    list(APPEND DEPENDENCIES Diligent-GraphicsEngineWebGPU-static)
     if (NOT PLATFORM_EMSCRIPTEN)
         list(APPEND DEPENDENCIES dawn_proc)
     endif()
@@ -113,7 +127,7 @@ endif()
 
 if(METAL_SUPPORTED)
     list(APPEND SOURCE src/GraphicsUtilitiesMtl.mm)
-    list(APPEND DEPENDENCIES Diligent-GraphicsEngineMetalInterface)
+    list(APPEND DEPENDENCIES Diligent-GraphicsEngineMetal-static)
 endif()
 
 add_library(Diligent-GraphicsTools STATIC ${SOURCE} ${INCLUDE} ${INTERFACE})
@@ -149,6 +163,11 @@ endif()
 
 if(RENDER_STATE_CACHE_SUPPORTED)
     target_compile_definitions(Diligent-GraphicsTools PUBLIC DILIGENT_RENDER_STATE_CACHE_SUPPORTED=1)
+endif()
+
+if(DILIGENT_USE_OPENXR)
+    target_link_libraries(Diligent-GraphicsTools PRIVATE OpenXR::headers)
+    target_compile_definitions(Diligent-GraphicsTools PUBLIC DILIGENT_USE_OPENXR=1)
 endif()
 
 if(D3D11_SUPPORTED OR D3D12_SUPPORTED)
