@@ -108,6 +108,7 @@ PRIVATE
     Diligent-Common
     Diligent-GraphicsAccessories
     Diligent-ShaderTools
+    cpptrace::cpptrace
 )
 
 if(D3D11_SUPPORTED)
@@ -182,6 +183,7 @@ PUBLIC
 PRIVATE
     Diligent-BuildSettings
     ${WHOLE_ARCHIVE_FLAG} Diligent-Archiver-static ${NO_WHOLE_ARCHIVE_FLAG}
+    cpptrace::cpptrace
 )
 
 if(PLATFORM_WIN32)

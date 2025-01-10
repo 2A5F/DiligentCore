@@ -165,7 +165,6 @@ add_library(Diligent-GraphicsEngineD3D12Interface INTERFACE)
 target_link_libraries     (Diligent-GraphicsEngineD3D12Interface INTERFACE Diligent-GraphicsEngineD3DBaseInterface)
 target_include_directories(Diligent-GraphicsEngineD3D12Interface INTERFACE interface)
 
-
 add_library(Diligent-GraphicsEngineD3D12-static STATIC
     ${SRC} ${INTERFACE} ${INCLUDE} ${SHADERS}
     readme.md
@@ -196,6 +195,7 @@ PRIVATE
     Diligent-ShaderTools
     dxgi.lib
     d3dcompiler.lib
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineD3D12Interface
 )
@@ -215,6 +215,7 @@ target_link_libraries(Diligent-GraphicsEngineD3D12-shared
 PRIVATE
     Diligent-BuildSettings
     Diligent-GraphicsEngineD3D12-static
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineD3D12Interface
 )

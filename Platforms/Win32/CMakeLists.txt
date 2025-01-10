@@ -28,6 +28,7 @@ target_link_libraries(Diligent-Win32Platform
 PUBLIC
     Diligent-BasicPlatform
     Diligent-PlatformInterface
+    cpptrace::cpptrace
 PRIVATE
     Diligent-BuildSettings
     Shlwapi.lib

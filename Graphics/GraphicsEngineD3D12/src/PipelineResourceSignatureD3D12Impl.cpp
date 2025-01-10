@@ -41,6 +41,8 @@
 
 #include "D3D12TypeConversions.hpp"
 
+#include <cpptrace/cpptrace.hpp>
+
 namespace Diligent
 {
 
@@ -119,7 +121,7 @@ PipelineResourceSignatureD3D12Impl::PipelineResourceSignatureD3D12Impl(IReferenc
                                                                        bool                                 bIsDeviceInternal) :
     TPipelineResourceSignatureBase{pRefCounters, pDevice, Desc, ShaderStages, bIsDeviceInternal}
 {
-    try
+    CPPTRACE_TRY
     {
         ValidatePipelineResourceSignatureDescD3D12(Desc);
 
@@ -134,9 +136,13 @@ PipelineResourceSignatureD3D12Impl::PipelineResourceSignatureD3D12Impl(IReferenc
                 return ShaderResourceCacheD3D12::GetMemoryRequirements(m_RootParams).TotalSize;
             });
     }
-    catch (...)
+    CPPTRACE_CATCH (...)
     {
         Destruct();
+
+        const auto trace = cpptrace::from_current_exception().to_string();
+        LOG_ERROR("Trance: \n", trace);
+
         throw;
     }
 }

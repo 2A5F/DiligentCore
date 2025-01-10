@@ -155,6 +155,7 @@ PRIVATE
     Diligent-BuildSettings
     Diligent-GraphicsAccessories
     Diligent-Common
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineInterface
 )

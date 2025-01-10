@@ -31,6 +31,7 @@ PUBLIC
 target_link_libraries(Diligent-GraphicsAccessories
 PRIVATE
     Diligent-BuildSettings
+    cpptrace::cpptrace
 PUBLIC
     Diligent-Common
     Diligent-GraphicsEngineInterface

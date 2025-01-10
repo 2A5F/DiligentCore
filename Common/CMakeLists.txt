@@ -75,6 +75,7 @@ PUBLIC
 target_link_libraries(Diligent-Common
 PRIVATE
     Diligent-BuildSettings
+    cpptrace::cpptrace
 PUBLIC
     Diligent-TargetPlatform
 )

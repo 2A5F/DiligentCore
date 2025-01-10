@@ -150,6 +150,7 @@ PRIVATE
     Diligent-GraphicsEngine
     xxHash::xxhash
     ${DEPENDENCIES}
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineInterface
 )

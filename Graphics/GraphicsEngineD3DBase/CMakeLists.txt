@@ -51,6 +51,7 @@ target_link_libraries(Diligent-GraphicsEngineD3DBase
 PRIVATE
     Diligent-BuildSettings
     Diligent-ShaderTools
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngine
     Diligent-GraphicsEngineD3DBaseInterface

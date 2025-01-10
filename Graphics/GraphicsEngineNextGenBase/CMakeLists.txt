@@ -23,6 +23,7 @@ PUBLIC
 target_link_libraries(Diligent-GraphicsEngineNextGenBase
 PRIVATE
     Diligent-BuildSettings
+    cpptrace::cpptrace
 PUBLIC
     Diligent-PlatformInterface
     Diligent-Common

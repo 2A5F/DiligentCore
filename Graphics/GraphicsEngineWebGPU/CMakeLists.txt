@@ -141,6 +141,7 @@ endif()
 target_link_libraries(Diligent-GraphicsEngineWebGPU-static
 PRIVATE
     ${PRIVATE_DEPENDENCIES}
+    cpptrace::cpptrace
 PUBLIC
     ${PUBLIC_DEPENDENCIES}
 )
@@ -149,6 +150,7 @@ target_link_libraries(Diligent-GraphicsEngineWebGPU-shared
 PRIVATE
     Diligent-BuildSettings 
     Diligent-GraphicsEngineWebGPU-static
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineWebGPUInterface
 )

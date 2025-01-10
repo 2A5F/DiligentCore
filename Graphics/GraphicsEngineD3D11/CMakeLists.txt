@@ -132,6 +132,7 @@ PRIVATE
     dxgi.lib
     d3d11.lib
     d3dcompiler.lib
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineD3D11Interface
 )
@@ -144,6 +145,7 @@ target_link_libraries(Diligent-GraphicsEngineD3D11-shared
 PRIVATE
     Diligent-BuildSettings 
     Diligent-GraphicsEngineD3D11-static
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineD3D11Interface
 )

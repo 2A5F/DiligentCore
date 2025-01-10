@@ -35,6 +35,8 @@
 #include "DebugOutput.h"
 #include "FormatString.hpp"
 
+#include <cpptrace/cpptrace.hpp>
+
 namespace Diligent
 {
 
@@ -46,7 +48,7 @@ void ThrowIf(std::string&&)
 template <>
 inline void ThrowIf<true>(std::string&& msg)
 {
-    throw std::runtime_error(std::move(msg));
+    throw cpptrace::runtime_error(std::move(msg));
 }
 
 template <bool bThrowException, typename... ArgsType>

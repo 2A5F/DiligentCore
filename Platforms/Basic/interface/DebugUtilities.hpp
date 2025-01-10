@@ -31,6 +31,8 @@
 #include "../../../Primitives/interface/Errors.hpp"
 #include "BasicPlatformDebug.hpp"
 
+#include <cpptrace/cpptrace.hpp>
+
 #ifdef DILIGENT_DEBUG
 
 #    include <typeinfo>
@@ -41,7 +43,7 @@
         {                                                                                  \
             auto msg = Diligent::FormatString(Message, ##__VA_ARGS__);                     \
             /*Diligent::DebugAssertionFailed(msg.c_str(), __FUNCTION__, __FILE__, __LINE__);*/ \
-            throw std::runtime_error(msg);                                                 \
+            throw cpptrace::runtime_error(std::move(msg));                                 \
         } while (false)
 
 #    define VERIFY(Expr, Message, ...)                    \

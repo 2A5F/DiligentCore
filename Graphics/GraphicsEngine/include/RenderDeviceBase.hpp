@@ -49,6 +49,8 @@
 #include "IndexWrapper.hpp"
 #include "ThreadPool.hpp"
 
+#include <cpptrace/from_current.hpp>
+
 namespace Diligent
 {
 
@@ -406,6 +408,24 @@ protected:
         try
         {
             ConstructObject();
+        }
+        catch (const cpptrace::exception& e)
+        {
+            VERIFY(*ppObject == nullptr, "Object was created despite error");
+            if (*ppObject)
+            {
+                (*ppObject)->Release();
+                *ppObject = nullptr;
+            }
+            const auto ObjectDescString = GetObjectDescString(Desc);
+            if (!ObjectDescString.empty())
+            {
+                LOG_ERROR("Failed to create ", ObjectTypeName, " object '", (Desc.Name ? Desc.Name : ""), "'\n", ObjectDescString, "\n\n", e.what());
+            }
+            else
+            {
+                LOG_ERROR("Failed to create ", ObjectTypeName, " object '", (Desc.Name ? Desc.Name : ""), "'", "\n\n", e.what());
+            }
         }
         catch (...)
         {

@@ -6,6 +6,10 @@ cmake_minimum_required (VERSION 3.11)
 # instead:
 set(CMAKE_POLICY_DEFAULT_CMP0063 NEW)
 
+if (NOT TARGET cpptrace::cpptrace)
+    add_subdirectory(cpptrace)
+endif ()
+
 if (GL_SUPPORTED AND (PLATFORM_WIN32 OR PLATFORM_LINUX OR PLATFORM_MACOS) AND (NOT TARGET GLEW::glew))
     add_subdirectory(glew)
     if (DILIGENT_INSTALL_CORE)

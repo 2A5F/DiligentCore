@@ -50,6 +50,7 @@ PRIVATE
     Diligent-Common
     Diligent-PlatformInterface
     Diligent-GraphicsEngine
+    cpptrace::cpptrace
 PUBLIC
     Diligent-GraphicsEngineInterface
     Diligent-ShaderTools

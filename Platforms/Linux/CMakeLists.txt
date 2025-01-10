@@ -27,6 +27,7 @@ PUBLIC
 target_link_libraries(Diligent-LinuxPlatform
 PRIVATE
     Diligent-BuildSettings
+    cpptrace::cpptrace
 PUBLIC
     Diligent-BasicPlatform
     Diligent-PlatformInterface

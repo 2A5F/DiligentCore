@@ -126,6 +126,7 @@ PUBLIC
     Diligent-PlatformInterface
     Diligent-Common
     Diligent-GraphicsAccessories
+    cpptrace::cpptrace
 )
 
 source_group("src" FILES ${SOURCE})

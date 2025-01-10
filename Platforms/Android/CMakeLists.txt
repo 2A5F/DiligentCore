@@ -33,6 +33,7 @@ PRIVATE
     log
     android
     Diligent-BuildSettings
+    cpptrace::cpptrace
 PUBLIC
     Diligent-PlatformInterface
     Diligent-BasicPlatform

@@ -39,6 +39,9 @@
 #include "SpinLock.hpp"
 #include "Cast.hpp"
 
+#include <cpptrace/cpptrace.hpp>
+#include <cpptrace/from_current.hpp>
+
 namespace Diligent
 {
 

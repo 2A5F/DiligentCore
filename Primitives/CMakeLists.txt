@@ -37,6 +37,7 @@ set_common_target_properties(Diligent-Primitives)
 target_link_libraries(Diligent-Primitives
 PRIVATE
     Diligent-BuildSettings
+    cpptrace::cpptrace
 )
 
 target_include_directories(Diligent-Primitives

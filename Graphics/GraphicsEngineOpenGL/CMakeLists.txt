@@ -256,6 +256,7 @@ endif()
 target_link_libraries(Diligent-GraphicsEngineOpenGL-static
 PRIVATE
     ${PRIVATE_DEPENDENCIES}
+    cpptrace::cpptrace
 PUBLIC
     ${PUBLIC_DEPENDENCIES}
 )
@@ -263,6 +264,7 @@ target_link_libraries(Diligent-GraphicsEngineOpenGL-shared
 PRIVATE
     Diligent-BuildSettings
     ${WHOLE_ARCHIVE_FLAG} Diligent-GraphicsEngineOpenGL-static ${NO_WHOLE_ARCHIVE_FLAG}
+    cpptrace::cpptrace
 PUBLIC
     ${PUBLIC_DEPENDENCIES}
 )
